@@ -1,0 +1,89 @@
+Logan Passi
+
+CIS1400
+
+Pay Calculator with Overtime
+
+09/19/2016
+
+//Global named constant
+
+Constant integer BASE_HOURS = 40
+
+//main module definition
+
+Module main()
+	
+	//local variables to hold the data
+	
+	Declare Real hoursWorked, payRate
+	
+	Delcare Boolean overtime = False //flag to indicate overtime status
+	
+	//get user input
+	
+	Display "Enter the number of hours worked: "
+	
+	Input hoursWorked
+	
+	Display "Enter hourly pay rate: "
+	
+	Input payRate
+	
+	//determine overtime status
+	
+	if hoursWorked > BASE_HOURS Then
+		
+		Set overtime = True
+		
+	End if
+	
+	//call appropriate module based on overtime status
+	
+	if overitme Then
+	
+		Call calcOTPay(hoursWorked, payRate)
+		
+	Else
+	
+		Call calcPay(hoursWorked, payRate)
+		
+	End if
+	
+	//module to calculate regular pay
+	
+	Module calcPay(Real hours, Real rate)
+	
+		Declare Real grossPay
+		
+		Set grossPay = hours * rate
+		
+		Display "The gross pay is $", grossPay
+		
+	End Module
+	
+	
+	//module to calculate regular and overtime pay
+	
+	Module calcOTPay(Real hours, Real rate)
+	
+		Declare Real otHours, otPay, grossPay
+		
+		Constant Real OT_MULTIPLIER = 1.5 //local constant
+		
+		Set otHours = hours - BASE_HOURS
+		
+		Set otPay = otHours * rate * OT_MULTIPLIER
+		
+		//claculate total gross pay
+		
+		Set grossPay = BASE_HOURS * rate + otPay
+		
+		//display total gross pay
+		
+		Display "The gross pay with overtime is $", grossPay
+		
+	End Module
+		
+		
+		

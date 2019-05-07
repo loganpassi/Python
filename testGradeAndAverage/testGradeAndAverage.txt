@@ -1,0 +1,146 @@
+module main():
+
+	Declare Real score1, Real score2, Real score3, Real score4, Real score5, Real average, String grade
+	
+	
+	set score1 = Real(getValidScore())
+	
+	set grade = determineGrade(score1)
+	
+	Display "\t\t\t\tGRADE"
+	
+	Display "\t\t\t\t-----"
+	
+	Display "\t\t\t\t ",grade)	
+	
+	
+	set score2 = Real(getValidScore())
+	
+	set grade = determineGrade(score2)
+	
+	Display "\t\t\t\tGRADE"
+	
+	Display "\t\t\t\t-----"
+	
+	Display "\t\t\t\t ",grade)
+		
+	
+	set score3 = Real(getValidScore())
+	
+	set grade = determineGrade(score3)
+	
+	Display "\t\t\t\tGRADE"
+	
+	Display "\t\t\t\t-----"
+	
+	Display "\t\t\t\t ",grade)
+		
+	
+	set score4 = Real(getValidScore())
+	
+	set grade = determineGrade(score4)
+	
+	Display "\t\t\t\tGRADE"
+	
+	Display "\t\t\t\t-----"
+	
+	Display "\t\t\t\t ",grade)
+	
+	
+	set score5 = Real(getValidScore())
+	
+	set grade = determineGrade(score5)
+	
+	Display "\t\t\t\tGRADE"
+	
+	Display "\t\t\t\t-----"
+	
+	Display "\t\t\t\t ",grade)
+	
+	
+	set average = Real(calcAverage(score1, score2, score3, score4, score5))
+	
+	print("The average grade is", format(average, ".2f"),"
+
+End Module
+	
+
+function getValidScore():
+
+	Declare string score
+	
+	Display "Enter in your score:"
+	
+	Input score
+	
+	while isInvalidScore(score):
+	
+		Display "Enter in a valid score (a value 1-100)"
+		
+		Input score
+		
+	return Real score
+
+End Function
+	
+	
+function isInvalidScore(String score):
+
+	Declare Boolean status
+	
+	if not score.replace(".", "").isnumeric \
+	
+	or Real(score) < 0 or Real(score) > 100:
+	
+	set status = True
+	
+	else:
+	
+		status = False
+		
+	return status
+
+End Function
+	
+	
+Funcion determineGrade(Real score):
+
+	declare String grade
+	
+	if score <= 100 and score >= 90:
+	
+		set grade = "A"
+		
+		if score <= 89.99 and score >= 80:
+		
+			set grade = "B"
+			
+			if score <=79.99 and score >= 70:
+			
+				set grade = "C"
+				
+				if score <=69.99 and score >= 60:
+				
+					set grade = "D"
+					
+					else:
+					
+						grade = "F"
+						
+						return grade
+
+End Function
+
+
+
+Function calcAverage(Real score1, Real score2, Real score3, Real score4, Real score5):
+
+	Declare Real average
+	
+	average = (score1 + score2 + score3 + score4 + score5)/5
+	
+	return average
+	
+End Function
+					
+		
