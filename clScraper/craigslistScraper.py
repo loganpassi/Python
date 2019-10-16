@@ -18,7 +18,7 @@ import time
 def main():
     cityList = []
     urlList = []
-    keyword = "fw900+%7C+A7217A+%7C+FW0911+%7C+FW9010" #what im searching on craigslist
+    keyword = "FW900+%7C+A7217A+%7C+FW0911+%7C+FW9010+%7C+"
     file = open("F:\\Desktop\\pyScript\\craigslist.txt", "r") #open list of cities for each craiglist url
     for entry in file:
         entry = entry[:-1]  # removes the newline at the end of each city
@@ -34,14 +34,14 @@ def main():
 #function to send an email once an FW900 listing has been found
 def sendMail(url):
     port = 465
-    password = "" #password for sending email
-    senderAdd = "" #email address the email will come from
-    recievingAdd = "" #email address the email will go to
+    password = "fw900please"
+    senderAdd = "sitesearchppy@gmail.com"
+    recievingAdd = "loganpassi88@gmail.com"
     context = ssl.create_default_context()
     #subject = "Subject: FW900 FOUND!\n\n"
 
 
-    message = MIMEMultipart("alternative")  #writing out the email
+    message = MIMEMultipart("alternative")
     message["Subject"] = "FW900 FOUND!!!"
     message["From"] = senderAdd
     message["To"] = recievingAdd
@@ -79,7 +79,7 @@ def clSearch(soup, url):
         print("\n==========================")
         print("FW900 FOUND!")
         print(url)
-        sendMail(url) #calls the function to send an email
+        sendMail(url)
         print("==========================\n")
         input("Press any key to continue searching...")
 
@@ -91,24 +91,26 @@ def proxyCrawler(urlList):
     i = 1
     j = 1
     while True:
-        if i % 5 == 0: #switch proxies every 5 iterations
+        if i % 5 == 0:
             proxyIndex = randomElem(proxyList)
             http_proxy = proxyList[proxyIndex]
-        if i % 50 == 0: #get a new list of proxies every 50 iterations
+        if i % 50 == 0:
             proxyList = proxyScraper()
             i = 0
 
+        ua = UserAgent()
         urlIndex = randomElem(urlList)
         url = urlList[urlIndex]
         urlReq = Request(url)
+        urlReq.add_header("User-Agent", ua.random)
 
         while True:
-            try: #try to open the url with the current proxie
+            try:
                 urlDoc = urlopen(urlReq).read().decode("utf8")
                 print("#" + str(j))
                 print("Current Proxy: " + http_proxy["ip"] + ":" + http_proxy["port"])
                 break
-            except: #if the current proxie doesn't work, delete it and get another and then test it
+            except:
                 del proxyList[proxyIndex]
                 print('Proxy ' + http_proxy['ip'] + ':' + http_proxy['port'] + ' deleted.\n')
                 proxyIndex = randomElem(proxyList)
@@ -119,23 +121,23 @@ def proxyCrawler(urlList):
         clSearch(soup, url)
         i += 1
         j += 1
-        time.sleep(4) #wait 4 seconds to give craigslist and the free proxie site a break
-        if j % 100 == 0: #every 100 iterations clear the console just to get rid of useless text
+        time.sleep(3)
+        if j % 100 == 0:
             os.system('cls')
 
 #function to scrape new proxies
 def proxyScraper():
-    ua = UserAgent() #make a useragent obj
+    ua = UserAgent()
     proxyList = [] #will contain proxies[ip, port]
-    proxiesReq = Request("https://www.sslproxies.org/") #that url is the site that hosts the free proxies
-    proxiesReq.add_header("User-Agent", ua.random) #making the useragent random
+    proxiesReq = Request("https://www.sslproxies.org/")
+    proxiesReq.add_header("User-Agent", ua.random)
     proxiesDoc = urlopen(proxiesReq).read().decode("utf8")
 
     soup = BeautifulSoup(proxiesDoc, "lxml")
-    proxiesTbl = soup.find(id = 'proxylisttable') #looks for the html id that is called proxylisttable, it holds all the proxies
+    proxiesTbl = soup.find(id = 'proxylisttable')
 
-    for row in proxiesTbl.tbody.find_all("tr"): #go through the table rows and look for the proxy ip and port
-        proxyList.append({ #then append the ip and port to a list of dicts
+    for row in proxiesTbl.tbody.find_all("tr"):
+        proxyList.append({
             'ip': row.find_all('td')[0].string,
             'port': row.find_all('td')[1].string
         })
