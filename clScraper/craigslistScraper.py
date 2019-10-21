@@ -93,9 +93,9 @@ def proxyCrawler(urlList):
     while True:
         if i % 5 == 0:
             proxyIndex = randomElem(proxyList)
-            http_proxy = proxyList[proxyIndex]
+            http_proxy = proxyList[proxyIndex] #chooses a new proxy from the list of proxies
         if i % 50 == 0:
-            proxyList = proxyScraper()
+            proxyList = proxyScraper() #gets a new list of proxies
             i = 0
 
         ua = UserAgent()
@@ -111,10 +111,13 @@ def proxyCrawler(urlList):
                 print("Current Proxy: " + http_proxy["ip"] + ":" + http_proxy["port"])
                 break
             except:
-                del proxyList[proxyIndex]
-                print('Proxy ' + http_proxy['ip'] + ':' + http_proxy['port'] + ' deleted.\n')
-                proxyIndex = randomElem(proxyList)
-                http_proxy = proxyList[proxyIndex]
+                try:#
+                    del proxyList[proxyIndex]
+                    print('Proxy ' + http_proxy['ip'] + ':' + http_proxy['port'] + ' deleted.\n')
+                    proxyIndex = randomElem(proxyList)
+                    http_proxy = proxyList[proxyIndex]
+                except:
+                    proxyList = proxyScraper()
 
         soup = BeautifulSoup(urlDoc, 'lxml')
 
