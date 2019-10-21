@@ -76,6 +76,8 @@ def clSearch(soup, url):
         print(url)
         print("Nothing...\n")
     else:
+        #add something to remove the found town from the list of cl sites and
+        #put it in the listings.txt file
         print("\n==========================")
         print("FW900 FOUND!")
         print(url)
