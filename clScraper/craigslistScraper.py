@@ -34,9 +34,9 @@ def main():
 #function to send an email once an FW900 listing has been found
 def sendMail(url):
     port = 465
-    password = "fw900please"
-    senderAdd = "sitesearchppy@gmail.com"
-    recievingAdd = "loganpassi88@gmail.com"
+    password = #sending email pw
+    senderAdd = #sending email
+    recievingAdd = #receiving email
     context = ssl.create_default_context()
     #subject = "Subject: FW900 FOUND!\n\n"
 
