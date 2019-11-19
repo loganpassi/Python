@@ -19,7 +19,7 @@ def main():
     cityList = []
     urlList = []
     keyword = "FW900+%7C+A7217A+%7C+FW0911+%7C+FW9010+%7C+"
-    file = open("F:\\Desktop\\pyScript\\craigslist.txt", "r") #open list of cities for each craiglist url
+    file = open("craigslist.txt", "r") #open list of cities for each craiglist url
     for entry in file:
         entry = entry[:-1]  # removes the newline at the end of each city
         cityList.append(entry)
@@ -83,7 +83,7 @@ def clSearch(soup, url):
         print(url)
         sendMail(url)
         print("==========================\n")
-        input("Press any key to continue searching...")
+        #input("Press any key to continue searching...") #uncomment this line if you want the program to pause after it finds something
 
 #fucntion to crawl through the proxies
 def proxyCrawler(urlList):
